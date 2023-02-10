@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluasi 2 DOM HTML</title>
+</head>
+<body>
+    <h1>Nilai Siswa</h1>
+    <table>
+        <tr>
+            <td>Nama</td>
+            <td>:</td>
+            <td id="nama">Restu</td>
+        </tr>
+        <tr>
+            <td>Nilai</td>
+            <td>:</td>
+            <td id="nilai">80</td>
+        </tr>
+       <tr>
+        <td>Grade Nilai</td>
+        <td>:</td>
+        <td id="grateNilai"></td>
+       </tr>
+    </table>
+    <script>
+    
+    
+    const elemenNilai = document.getElementById("nilai");
+    console.log (elemenNilai.innerHTML);
+
+    const elemenGrateNilai = document.getElementById("grateNilai");
+    console.log (elemenGrateNilai.innerHTML);
+
+        if (elemenNilai.innerHTML  >= 80){
+            console.log(elemenGrateNilai.innerHTML += 'A');
+        } else if (elemenNilai.innerHTML >= 60){
+            console.log(elemenGrateNilai.innerHTML +='B');
+        } else {
+            console.log (elemenGrateNilai.innerHTML += 'C')
+        }
+    </script>
+</body>
+</html>

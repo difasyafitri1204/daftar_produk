@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVALUASI 1 DOM HTML</title>
+</head>
+<body>
+    <h1>My Biodata</h1>
+    <table>
+        <tr>
+            <td>Nama</td>
+            <td>:</td>
+            <td id="nama"></td>
+        </tr>
+        <tr>
+            <td>Hobi</td>
+            <td>:</td>
+            <td id="hobi"></td>
+        </tr>
+        <tr>
+            <td>Alamat</td>
+            <td>:</td>
+            <td id="alamat"></td>
+        </tr>   
+    </table>
+    <script type="text/javascript">
+        document.getElementsByTagName('h1')[0].innerHTML = "Biodata Saya";
+
+        const elemenNama = document.getElementById('nama');
+        console.log (elemenNama.innerHTML);
+        elemenNama.innerHTML += 'Difa syafitri';
+
+
+        const elemenHobi = document.getElementById('hobi');
+        console.log (elemenHobi.innerHTML);
+        elemenHobi.innerHTML += 'Mendengarkan Musik';
+
+        const elemenAlamat = document.getElementById('alamat');
+        console.log (elemenAlamat.innerHTML);
+        elemenAlamat.innerHTML += 'Cipeuyeum';
+
+    </script>
+</body>
+</html>

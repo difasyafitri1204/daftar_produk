@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML DOM  EVENT</title>
+    <style> table, td{}</style>
+</head>
+<body>
+    <h1>Mobil</h1>
+        <form onsubmit="event.preventDefault(); kirimData(this)">
+            <div>
+                <input  name="merk" placeholder="Merk">
+            </div>
+            <div>
+                <input  name="type" placeholder="Type">
+            </div>
+            <div>
+                <input  name="warna" placeholder="Warna">
+            </div>
+            <div>
+                <input  name="kapasitasSilinder" placeholder="kapasitasSilinder">
+            </div>
+            <button>Simpan</button>
+        </form>
+    <h1>Mobil</h1>
+    <table id="myTable">
+        <tr>
+            <td>
+                <div id="apaaja"></div>
+            </td>
+            
+        </tr>
+        <tr>
+            <td>
+                <div id="apaaja1"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="apaaja2"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div id="apaaja3"></div>
+            </td>
+        </tr>
+    </table>
+       
+   
+    <script type="text/javascript">
+        function kirimData(element) {
+            const merk = element.merk.value;
+            const type = element.type.value;
+            const warna = element.warna.value;
+            const kapasitasSilinder = element.kapasitasSilinder.value;
+
+            // document.getElementById('apaaja').innerHTML = `Merk: ${merk}, Type: ${
+            //     type}, Warna: ${warna}, KapasitasSilinder: ${kapasitasSilinder}`;
+                console.table(["Merk", "Type", "Warna", "KapasitasSilinder" ])
+                document.getElementById('apaaja').innerHTML = `Merk: ${merk}`;
+                document.getElementById('apaaja1').innerHTML = `Type: ${type}`;
+                document.getElementById('apaaja2').innerHTML = `Warna: ${warna}`;
+                document.getElementById('apaaja3').innerHTML = `KapasitasSilinder: ${kapasitasSilinder}`;
+               
+            return false;
+        }
+    </script>
+   
+
+</body>
+</html>

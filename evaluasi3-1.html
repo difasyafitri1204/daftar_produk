@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML DOM EVENT</title>
+</head>
+<body>
+    <button onclick="berhenti()">Merah</button>
+    <button onclick="hatihati()">Kuning</button>
+    <button onclick="jalan()">Hijau</button>
+    
+    <h2>Instruksi</h2>
+    <h1 id="konten"></h1>
+
+    <script type="text/javascript">
+        function berhenti() {
+            document.getElementById('konten').innerHTML = 'Berhenti'
+        }
+        function hatihati() {
+            document.getElementById('konten').innerHTML = 'Hati-hati'
+        }
+        function jalan() {
+            document.getElementById('konten').innerHTML = 'Jalan'
+        }
+    </script>
+</body>
+</html>
