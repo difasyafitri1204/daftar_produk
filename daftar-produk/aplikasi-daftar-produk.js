@@ -41,10 +41,10 @@ const aplikasiDaftarProduk = {
         } else {
             this.daftarProduk[this.produk.index] = copy(this.produk)
         }
-        this.resetFormTugas(form);
+        this.resetFormProduk(form);
     },
     
-    resetFormTugas: function(form) {
+    resetFormProduk: function(form) {
         this.produk.produk =null;
         this.produk.harga = null;
         this.produk.stok = null;
