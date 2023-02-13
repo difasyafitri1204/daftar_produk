@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kategori</title>
+    
+</head>
+<body>
+
+    <h1>Kategori Produk</h1>
+    <form id="form-kategori" action="" onsubmit="event.preventDefault(); simpanKategori(this)" >
+        <input name="index" type="hidden" value="-1">
+        <div  style="padding-bottom: 10px;">
+            <label for="nama">Nama Kategori</label>
+        </div>
+        <div>
+            <input type="text" id="nama" name="nama">
+        </div>
+        <div style="padding-top: 10px;">
+            <button id="btn-save-kategori" style="background-color: blanchedalmond;">Simpan</button>
+        </div>
+    </form>
+        <div id="daftar-kategori"></div>
+    <script type="text/javascript">
+        function simpanKategori(form) {
+        console.log(form);
+        daftarKategori.inputKategori(form);
+        daftarKategori.menampilkanDaftarKategori();
+    }
+        const daftarKategori = {
+        kategori: {
+            index: -1,
+            nama: null
+        },
+        daftarKategori: [],
+        inputKategori: function (form) {
+            this.kategori.index = form.index.value;
+            this.kategori.nama = form.nama.value;
+
+            if(!this.kategori.nama) {
+                alert('nama kategori tidak boleh kosong');
+                return false
+            }
+
+            if(this.kategori.index == -1) {
+                this.daftarKategori.push(copy(this.kategori));
+            } else {
+                this.daftarKategori[this.kategori.index] = copy(this.kategori)
+            }
+            this.resetFormKategori(form);
+        },
+            resetFormKategori: function(form) {
+            this.kategori.nama =null;
+            this.kategori.index = -1;
+
+            form.nama.value = this.kategori.nama;
+            form.index.value = this.kategori.index;
+
+            document.getElementById('btn-save-kategori').innerHTML = 'Simpan';
+        },
+
+        menampilkanDaftarKategori: function(form) {
+                const componentDaftarKategori = document.getElementById('daftar-kategori');
+                componentDaftarKategori.innerHTML = '';
+                this.daftarKategori.forEach((kategori, index) => {
+                    componentDaftarKategori.innerHTML +=  `<h4>${kategori.nama} <button
+                    style="background-color: blanchedalmond;" onclick="daftarKategori.editKategori(${index})">Edit</button><button 
+                    style="background-color: blanchedalmond;" onclick="daftarKategori.hapusKategori(${index})"> Hapus </button></h4>`;
+                });
+        },
+        hapusKategori: function (index) {
+            if(confirm('Apakah anda yakin ingin menghapus kategori ini?')) {
+                this.daftarKategori.splice(index, 1);
+                this.menampilkanDaftarKategori();
+            }
+        },
+        editKategori: function (index) {
+            const kategori = this.daftarKategori[index];
+            const form = document.getElementById('form-kategori');
+            form.nama.value = kategori.nama;
+            form.index.value = index;
+
+            document.getElementById('btn-save-kategori').innerHTML = 'Edit';
+        }
+        }
+
+        function copy(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+        </script>
+</body>
+</html>
