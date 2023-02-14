@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>konsumen</title>
+    
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li ><a href="aplikasi_daftar_produk.html">Daftar Produk</a></li>
+                <li><a href="daftar-kategori.html">Kategori Produk</a></li>
+                <li><a href="transaksi.html">Transaksi</a></li>
+                <li class="active"><a href="konsumen.html">Konsumen</a></li>
+              </ul>
+            </div>
+        </nav>
+       <div class="container">        
+            <h1>Konsumen</h1>
+    
+        <form id="form-konsumen" action="" onsubmit="event.preventDefault(); simpanKonsumen(this)">
+            <input name="index" type="hidden" value="-1">
+
+        <div>
+            <label for="nama">Nama</label>
+        </div>
+        <div>
+            <input type="text" id="nama" name="nama">
+        </div>
+        <div>
+            <label for="alamat">alamat</label>
+        </div>
+        <div>
+            <input type="text" id="alamat" name="alamat">
+        </div>
+        <div>
+            <label for="no">no.Hp</label>
+        </div>
+        <div>
+            <input type="text" id="no" name="no">
+        </div>
+        <div>
+            <label for="email">Email</label>
+        </div>  
+        <div>
+            <input type="text" id="email" name="email">
+        </div>
+        <div style="padding-top: 10px;">
+            <button id="btn-save-konsumen" style="background-color: blanchedalmond;">Simpan</button>
+        </div>
+        
+    </form>
+
+    <div id="daftar-konsumen"></div>
+  </div>
+
+    <script >
+    function simpanKonsumen(form) {
+    console.log(form);
+    daftarKonsumen.inputKonsumen(form);
+    daftarKonsumen.menampilkanDaftarKonsumen();
+}
+const daftarKonsumen = {
+    konsumen: {
+        index: -1,
+       nama: null,
+        alamat: null,
+        no: null,
+        email: null
+    },
+    dfKonsumen: [],
+    inputKonsumen: function (form) {
+        this.konsumen.index = form.index.value;
+        this.konsumen.nama = form.nama.value;
+        this.konsumen.alamat = form.alamat.value;
+        this.konsumen.no = form.no.value;
+        this.konsumen.email = form.email.value;
+
+        if(!this.konsumen.nama) {
+            alert('nama tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.alamat) {
+            alert('alamat tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.no) {
+            alert('No.Hp tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.email) {
+            alert('email tidak boleh kosong');
+            return false
+        }
+        
+        if(this.konsumen.index == -1) {
+            this.dfKonsumen.push(copy(this.konsumen));
+        } else {
+            this.dfKonsumen[this.konsumen.index] = copy(this.konsumen)
+        }
+        this.resetFormKonsumen(form);
+    },
+    
+    resetFormKonsumen: function(form) {
+        this.konsumen.nama =null;
+        this.konsumen.alamat = null;
+        this.konsumen.no = null;
+        this.konsumen.email = null;
+        this.konsumen.index = -1;
+
+        form.nama.value = this.konsumen.nama;
+        form.alamat.value = this.konsumen.alamat;
+        form.no.value = this.konsumen.no;
+        form.email.value = this.konsumen.email;
+        form.index.value = this.konsumen.index;
+
+        document.getElementById('btn-save-konsumen').innerHTML = 'Simpan';
+    },
+    menampilkanDaftarKonsumen: function () {
+        const componentDaftarKonsumen = document.getElementById('daftar-konsumen');
+        componentDaftarKonsumen.innerHTML = '';
+        this.dfKonsumen.forEach((konsumen, index) => {
+            componentDaftarKonsumen.innerHTML +=  `<h4>${konsumen.nama} <br> ${konsumen.alamat} <br> stok: ${konsumen.no} <br>${konsumen.email} <button 
+            style="background-color: blanchedalmond;" onclick="daftarKonsumen.editKonsumen(${index})">Edit</button><button 
+            style="background-color: blanchedalmond;" onclick="daftarKonsumen.hapusKonsumen(${index})"> Hapus </button></h4>`;
+        });
+    },
+    hapusKonsumen: function (index) {
+        if(confirm('Apakah anda yakin ingin menghaapus data ini?')) {
+            this.dfKonsumen.splice(index, 1);
+            this.menampilkanDaftarKonsumen();
+        }
+    },
+    editKonsumen: function (index) {
+       
+            const konsumen = this.dfKonsumen[index];
+            const form = document.getElementById('form-konsumen');
+            form.index.value = index;
+            form.nama.value = konsumen.nama;
+            form.alamat.value = konsumen.alamat;
+            form.no.value = konsumen.no;
+            form.email.value = konsumen.email;
+
+        document.getElementById('btn-save-konsumen').innerHTML = 'Edit';
+    }
+}
+
+function copy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+    </script>
+</body>
+</html>

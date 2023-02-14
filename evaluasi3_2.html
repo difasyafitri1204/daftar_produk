@@ -24,7 +24,7 @@
             </div>
             <button>Simpan</button>
         </form>
-    <h1>Mobil</h1>
+    <h1 id="mobil"></h1>
     <table id="myTable">
         <tr>
             <td>
@@ -60,6 +60,7 @@
             // document.getElementById('apaaja').innerHTML = `Merk: ${merk}, Type: ${
             //     type}, Warna: ${warna}, KapasitasSilinder: ${kapasitasSilinder}`;
                 console.table(["Merk", "Type", "Warna", "KapasitasSilinder" ])
+                document.getElementById('mobil').innerHTML = `MOBIL ${mobil}`;
                 document.getElementById('apaaja').innerHTML = `Merk: ${merk}`;
                 document.getElementById('apaaja1').innerHTML = `Type: ${type}`;
                 document.getElementById('apaaja2').innerHTML = `Warna: ${warna}`;
