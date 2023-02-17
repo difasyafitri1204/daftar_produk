@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.25.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <title>konsumen</title>
+    
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+            <div class="flex-none px-2 mx-2"></div> 
+        <div class="flex-1 px-2 mx-2">
+        <div class="items-stretch hidden lg:flex">
+            <a class="btn btn-ghost btn-sm rounded-btn" href="aplikasi_daftar_produk.html">
+                  Daftar Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="daftar-kategori.html">
+                  Kategori Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="transaksi.html">
+                  Transaksi
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="konsumen.html">
+                  Konsumen
+                </a>
+        </div>
+        </div> 
+        <div class="flex-none">
+                <button class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">              
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>            
+                    </svg>
+                </button>
+        </div> 
+        <div class="flex-none">
+                <button class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">             
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>             
+                    </svg>
+                </button>
+        </div>
+        </div>
+        <div class="container">
+        <form id="form-konsumen" action="" onsubmit="event.preventDefault(); simpanKonsumen(this)">
+            <input name="index" type="hidden" value="-1">
+
+        <div>
+            <label for="nama">Nama</label>
+        </div>
+        <div>
+            <input type="text" id="nama" name="nama" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="alamat">alamat</label>
+        </div>
+        <div>
+            <input type="text" id="alamat" name="alamat" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="no">no.Hp</label>
+        </div>
+        <div>
+            <input type="text" id="no" name="no" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="email">Email</label>
+        </div>  
+        <div>
+            <input type="text" id="email" name="email" class="input input-primary input-bordered">
+        </div>
+        <div style="padding-top: 10px;">
+            <button id="btn-save-konsumen" class="btn btn-accent btn-active">Simpan</button>
+        </div>
+        
+    </form>
+
+    <div id="daftar-konsumen"></div>
+  </div>
+
+    <script >
+    function simpanKonsumen(form) {
+    console.log(form);
+    daftarKonsumen.inputKonsumen(form);
+    daftarKonsumen.menampilkanDaftarKonsumen();
+}
+const daftarKonsumen = {
+    konsumen: {
+        index: -1,
+       nama: null,
+        alamat: null,
+        no: null,
+        email: null
+    },
+    dfKonsumen: [],
+    inputKonsumen: function (form) {
+        this.konsumen.index = form.index.value;
+        this.konsumen.nama = form.nama.value;
+        this.konsumen.alamat = form.alamat.value;
+        this.konsumen.no = form.no.value;
+        this.konsumen.email = form.email.value;
+
+        if(!this.konsumen.nama) {
+            alert('nama tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.alamat) {
+            alert('alamat tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.no) {
+            alert('No.Hp tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.email) {
+            alert('email tidak boleh kosong');
+            return false
+        }
+        
+        if(this.konsumen.index == -1) {
+            this.dfKonsumen.push(copy(this.konsumen));
+        } else {
+            this.dfKonsumen[this.konsumen.index] = copy(this.konsumen)
+        }
+        this.resetFormKonsumen(form);
+    },
+    
+    resetFormKonsumen: function(form) {
+        this.konsumen.nama =null;
+        this.konsumen.alamat = null;
+        this.konsumen.no = null;
+        this.konsumen.email = null;
+        this.konsumen.index = -1;
+
+        form.nama.value = this.konsumen.nama;
+        form.alamat.value = this.konsumen.alamat;
+        form.no.value = this.konsumen.no;
+        form.email.value = this.konsumen.email;
+        form.index.value = this.konsumen.index;
+
+        document.getElementById('btn-save-konsumen').innerHTML = 'Simpan';
+    },
+    menampilkanDaftarKonsumen: function () {
+        const componentDaftarKonsumen = document.getElementById('daftar-konsumen');
+        componentDaftarKonsumen.innerHTML = '';
+        this.dfKonsumen.forEach((konsumen, index) => {
+            componentDaftarKonsumen.innerHTML +=  `<h4>${konsumen.nama} <br> ${konsumen.alamat} <br> stok: ${konsumen.no} <br>${konsumen.email} <button 
+            class="btn btn-accent btn-active" onclick="daftarKonsumen.editKonsumen(${index})">Edit</button><button 
+            class="btn btn-accent btn-active" onclick="daftarKonsumen.hapusKonsumen(${index})"> Hapus </button></h4>`;
+        });
+    },
+    hapusKonsumen: function (index) {
+        if(confirm('Apakah anda yakin ingin menghaapus data ini?')) {
+            this.dfKonsumen.splice(index, 1);
+            this.menampilkanDaftarKonsumen();
+        }
+    },
+    editKonsumen: function (index) {
+       
+            const konsumen = this.dfKonsumen[index];
+            const form = document.getElementById('form-konsumen');
+            form.index.value = index;
+            form.nama.value = konsumen.nama;
+            form.alamat.value = konsumen.alamat;
+            form.no.value = konsumen.no;
+            form.email.value = konsumen.email;
+
+        document.getElementById('btn-save-konsumen').innerHTML = 'Edit';
+    }
+}
+
+function copy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+}
+    </script>
+</body>
+</html>

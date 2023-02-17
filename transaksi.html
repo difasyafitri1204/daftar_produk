@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.25.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <title>Transaksi Penjual</title>
+</head>
+<body >
+    <div class="container-fluid">
+        <div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+            <div class="flex-none px-2 mx-2"></div> 
+        <div class="flex-1 px-2 mx-2">
+        <div class="items-stretch hidden lg:flex">
+            <a class="btn btn-ghost btn-sm rounded-btn" href="aplikasi_daftar_produk.html">
+                  Daftar Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="daftar-kategori.html">
+                  Kategori Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="transaksi.html">
+                  Transaksi
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="konsumen.html">
+                  Konsumen
+                </a>
+        </div>
+        </div> 
+        <div class="flex-none">
+                <button class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">              
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>            
+                    </svg>
+                </button>
+        </div> 
+        <div class="flex-none">
+                <button class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">             
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>             
+                    </svg>
+                </button>
+        </div>
+        </div>
+        <div class="container">
+    <form id="form-transaksi" action="" onsubmit="event.preventDefault(); simpanTransaksi(this)">
+            <input name="index" type="hidden" value="-1">
+
+        <div>
+            <label for="produk">Nama Produk</label>
+        </div>
+        <div>
+            <input type="text" id="produk" name="produk" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="harga">Harga Produk</label>
+        </div>
+        <div>
+            <input type="text" id="harga" name="harga" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="stok">Stok Produk</label>
+        </div>
+        <div>
+            <input type="text" id="stok" name="stok" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="gambar">Link Gambar Produk</label>
+        </div>  
+        <div>
+            <input type="text" id="gambar" name="gambar" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="jumlah">Jumlah</label>
+        </div>  
+        <div>
+            <input type="text" id="jumlah" name="jumlah" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="total">Total Harga</label>
+        </div>  
+        <div>
+            <input type="text" id="total" name="total" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="tunai">Tunai</label>
+        </div>  
+        <div>
+            <input type="text" id="tunai" name="tunai" class="input input-primary input-bordered">
+        </div>
+        <div>
+            <label for="kembalian">Kembalian</label>
+        </div>  
+        <div>
+            <input type="text" id="kembalian" name="kembalian" class="input input-primary input-bordered">
+        </div>
+        <div style="padding-top: 10px;">
+            <button id="btn-save-transaksi" class="btn btn-accent btn-active">Simpan</button>
+        </div>
+        <h1 id="histori"></h1>
+    </form>
+
+    <div id="daftar-transaksi"></div>
+</div>
+
+    <script type="text/javascript">
+        function simpanTransaksi(form) {
+        console.log(form);
+        document.getElementById('histori').innerHTML = 'Histori Penjual';
+        daftartransaksi.inputTransaksi(form);
+        daftartransaksi.menampilkanDaftarTransaksi();
+    }
+    const daftartransaksi = {
+        transaksi: {
+            index: -1,
+            produk: null,
+            harga: null,
+            stok: null,
+            gambar: null,
+            jumlah: null,
+            total: null,
+            tunai: null,
+            kembalian: null
+        },
+        daftarTransaksi: [],
+        inputTransaksi: function (form) {
+            this.transaksi.index = form.index.value;
+            this.transaksi.produk = form.produk.value;
+            this.transaksi.harga = form.harga.value;
+            this.transaksi.stok = form.stok.value;
+            this.transaksi.gambar = form.gambar.value;
+            this.transaksi.jumlah = form.jumlah.value;
+            this.transaksi.total = form.total.value;
+            this.transaksi.tunai = form.tunai.value;
+            this.transaksi.kembalian = form.kembalian.value;
+    
+            if(!this.transaksi.produk) {
+                alert('produk tidak boleh kosong');
+                return false
+            }
+            if(!this.transaksi.harga) {
+                alert('harga tidak boleh kosong');
+                return false
+            }
+            if(!this.transaksi.stok) {
+                alert('stok tidak boleh kosong');
+                return false
+            }
+            if(!this.transaksi.gambar) {
+                alert('link gambar tidak boleh kosong');
+                return false
+            }
+            if(!this.transaksi.jumlah) {
+                alert('link jumlah tidak boleh kosong');
+                return false
+            }
+            if(!this.transaksi.total) {
+                alert('link total tidak boleh kosong');
+                return false
+            }
+            if(!this.transaksi.tunai) {
+                alert('link tunai tidak boleh kosong');
+                return false
+            }
+            if(!this.transaksi.kembalian) {
+                alert('link kembalian tidak boleh kosong');
+                return false
+            }
+            
+            if(this.transaksi.index == -1) {
+                this.daftarTransaksi.push(copy(this.transaksi));
+            } else {
+                this.daftarTransaksi[this.transaksi.index] = copy(this.transaksi)
+            }
+            this.resetFormTransaksi(form);
+        },
+        
+        resetFormTransaksi: function(form) {
+            this.transaksi.produk =null;
+            this.transaksi.harga = null;
+            this.transaksi.stok = null;
+            this.transaksi.gambar = null;
+            this.transaksi.jumlah = null;
+            this.transaksi.total = null;
+            this.transaksi.tunai = null;
+            this.transaksi.kembalian = null;
+            this.transaksi.index = -1;
+    
+            form.produk.value = this.transaksi.produk;
+            form.harga.value = this.transaksi.harga;
+            form.stok.value = this.transaksi.stok;
+            form.gambar.value = this.transaksi.gambar;
+            form.jumlah.value = this.transaksi.jumlah;
+            form.total.value = this.transaksi.total;
+            form.tunai.value = this.transaksi.tunai;
+            form.kembalian.value = this.transaksi.kembalian;
+            form.index.value = this.transaksi.index;
+    
+            document.getElementById('btn-save-transaksi').innerHTML = 'Simpan';
+        },
+        menampilkanDaftarTransaksi: function () {
+            const componentDaftarTransaksi = document.getElementById('daftar-transaksi');
+            componentDaftarTransaksi.innerHTML = '';
+            this.daftarTransaksi.forEach((transaksi, index) => {
+                componentDaftarTransaksi.innerHTML +=  `<h4>${transaksi.produk} <br> ${transaksi.harga} <br> stok: ${transaksi.stok} <br> Jumlah: ${transaksi.jumlah}  <br> Total Harga: ${transaksi.total} <br> <img src="${transaksi.gambar}" width= "100px"></h4>`;
+            });
+        },
+       
+    }
+    
+    function copy(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
+</script>
+</body>
+</html>
+
+
+
+
+    
+        
