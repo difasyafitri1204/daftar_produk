@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.25.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <title>konsumen</title>
+    
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+            <div class="flex-none px-2 mx-2"></div> 
+        <div class="flex-1 px-2 mx-2">
+        <div class="items-stretch hidden lg:flex">
+            <a class="btn btn-ghost btn-sm rounded-btn" href="aplikasi_daftar_produk.html">
+                  Daftar Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="daftar-kategori.html">
+                  Kategori Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="transaksi.html">
+                  Transaksi
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="konsumen.html">
+                  Konsumen
+                </a>
+        </div>
+        </div> 
+        </div>
+        <div class="container">
+            <div class="flex justify-center gap-5">
+                <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <form id="form-konsumen" action="" onsubmit="event.preventDefault(); simpanKonsumen(this)">
+                                    <input name="index" type="hidden" value="-1">
+
+                                <div>
+                                    <label for="nama">Nama</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="nama" name="nama" class="input input-primary input-bordered">
+                                </div>
+                                <div>
+                                    <label for="alamat">alamat</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="alamat" name="alamat" class="input input-primary input-bordered">
+                                </div>
+                                <div>
+                                    <label for="no">no.Hp</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="no" name="no" class="input input-primary input-bordered">
+                                </div>
+                                <div>
+                                    <label for="email">Email</label>
+                                </div>  
+                                <div>
+                                    <input type="text" id="email" name="email" class="input input-primary input-bordered">
+                                </div>
+                                <div style="padding-top: 10px;">
+                                    <button id="btn-save-konsumen" class="btn btn-accent btn-active">Simpan</button>
+                                </div>                              
+                        </form>
+                    </div>
+                </div>
+                    <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <div id="daftar-konsumen"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" >
+        function simpanKonsumen(form) {
+        console.log(form);
+        daftarKonsumen.inputKonsumen(form);
+        daftarKonsumen.menampilkanDaftarKonsumen();
+    }
+    const dbKonsumen = {
+        save(dfKonsumen2) {
+            localStorage.setItem('dfKonsumen', JSON.stringify(dfKonsumen2));
+        },
+        get () {
+            return JSON.parse(localStorage.getItem('dfKonsumen'));
+        }
+    }
+    const daftarKonsumen = {
+    konsumen: {
+        index: -1,
+       nama: null,
+        alamat: null,
+        no: null,
+        email: null
+    },
+    dfKonsumen: [],
+    inputKonsumen: function (form) {
+        this.konsumen.index = form.index.value;
+        this.konsumen.nama = form.nama.value;
+        this.konsumen.alamat = form.alamat.value;
+        this.konsumen.no = form.no.value;
+        this.konsumen.email = form.email.value;
+
+        if(!this.konsumen.nama) {
+            alert('nama tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.alamat) {
+            alert('alamat tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.no) {
+            alert('No.Hp tidak boleh kosong');
+            return false
+        }
+        if(!this.konsumen.email) {
+            alert('email tidak boleh kosong');
+            return false
+        }
+        
+        if(this.konsumen.index == -1) {
+            this.dfKonsumen = this.dfKonsumen || [];
+            this.dfKonsumen.push(copy(this.konsumen));
+        } else {
+            this.dfKonsumen[this.konsumen.index] = copy(this.konsumen)
+        }
+        dbKonsumen.save(this.dfKonsumen);
+        this.resetFormKonsumen(form);
+    },
+    
+    resetFormKonsumen: function(form) {
+        this.konsumen.nama =null;
+        this.konsumen.alamat = null;
+        this.konsumen.no = null;
+        this.konsumen.email = null;
+        this.konsumen.index = -1;
+
+        form.nama.value = this.konsumen.nama;
+        form.alamat.value = this.konsumen.alamat;
+        form.no.value = this.konsumen.no;
+        form.email.value = this.konsumen.email;
+        form.index.value = this.konsumen.index;
+
+        document.getElementById('btn-save-konsumen').innerHTML = 'Simpan';
+    },
+    menampilkanDaftarKonsumen: function () {
+            this.dfKonsumen = dbKonsumen.get();
+            const componentDaftarKonsumen = document.getElementById('daftar-konsumen');
+            componentDaftarKonsumen.innerHTML = '';
+            if (this.dfKonsumen === null) {
+                console.log ('data nothing');
+            } else {
+                    this.dfKonsumen.forEach((konsumen, index) => {
+                    componentDaftarKonsumen.innerHTML +=  `<h4><div class="flex justify-center gap-5"> <div class="card-actions justify-end">${konsumen.nama} <br> ${konsumen.alamat} <br> stok: ${konsumen.no} <br>${konsumen.email} <button 
+                    class="btn btn-accent btn-active" onclick="daftarKonsumen.editKonsumen(${index})">Edit</button><button 
+                    class="btn btn-accent btn-active" onclick="daftarKonsumen.hapusKonsumen(${index})"> Hapus </button></div></div></h4>`;
+                    });
+            }   
+    },
+    hapusKonsumen: function (index) {
+        if(confirm('Apakah anda yakin ingin menghaapus data ini?')) {
+            this.dfKonsumen.splice(index, 1);
+            dbKonsumen.save(this.dfKonsumen);
+            this.menampilkanDaftarKonsumen();
+        }
+    },
+    editKonsumen: function (index) {
+       
+            const konsumen = this.dfKonsumen[index];
+            const form = document.getElementById('form-konsumen');
+            form.index.value = index;
+            form.nama.value = konsumen.nama;
+            form.alamat.value = konsumen.alamat;
+            form.no.value = konsumen.no;
+            form.email.value = konsumen.email;
+
+        document.getElementById('btn-save-konsumen').innerHTML = 'Edit';
+        }
+        }
+
+        function copy(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        daftarKonsumen.menampilkanDaftarKonsumen();
+
+    </script>   
+</body>
+</html>

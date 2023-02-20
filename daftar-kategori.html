@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.25.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+    <title>Daftar Kategori</title>   
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+            <div class="flex-none px-2 mx-2"></div> 
+                <div class="flex-1 px-2 mx-2">
+                    <div class="items-stretch hidden lg:flex">
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="aplikasi_daftar_produk.html">
+                                Daftar Produk
+                            </a> 
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="daftar-kategori.html">
+                                Kategori Produk
+                            </a> 
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="transaksi.html">
+                                Transaksi
+                            </a> 
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="konsumen.html">
+                                Konsumen
+                            </a>
+                    </div>      
+                </div>
+            </div>    
+        </div> 
+    </div>
+        <div class="container">
+            <div class="flex justify-center gap-5">
+                <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <form id="form-kategori" action="" onsubmit="event.preventDefault(); simpanKategori(this)" >
+                            <input name="index" type="hidden" value="-1">
+                            <div  style="padding-bottom: 10px;">
+                                <label for="nama">
+                                    <span class="label-text">Nama Kategori</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="text" id="nama" name="nama" class="input input-primary input-bordered">
+                            </div>
+                            <div style="padding-top: 10px;">
+                                <button id="btn-save-kategori" class="btn btn-accent btn-active">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                    <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <div id="daftar-kategori"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+            
+       
+    
+    <script type="text/javascript">
+        function simpanKategori(form) {
+        console.log(form);
+        daftarKategori.inputKategori(form);
+        daftarKategori.menampilkanDaftarKategori();
+        }
+        const dbKategori = {
+            save(daftarKategori2) {
+                localStorage.setItem('daftarKategori', JSON.stringify(daftarKategori2));
+            },
+            get() {
+                return JSON.parse(localStorage.getItem('daftarKategori'));
+            }
+        }
+        const daftarKategori = {
+        kategori: {
+            index: -1,
+            nama: null
+        },
+        daftarKategori: [],
+        inputKategori: function (form) {
+            this.kategori.index = form.index.value;
+            this.kategori.nama = form.nama.value;
+
+            if(!this.kategori.nama) {
+                alert('nama kategori tidak boleh kosong');
+                return false
+            }
+
+            if(this.kategori.index == -1) {
+                this.daftarKategori = this.daftarKategori || [];
+                this.daftarKategori.push(copy(this.kategori));
+            } else {
+                this.daftarKategori[this.kategori.index] = copy(this.kategori)
+            }
+            dbKategori.save(this.daftarKategori);
+            this.resetFormKategori(form);
+        },
+            resetFormKategori: function(form) {
+            this.kategori.nama =null;
+            this.kategori.index = -1;
+
+            form.nama.value = this.kategori.nama;
+            form.index.value = this.kategori.index;
+
+            document.getElementById('btn-save-kategori').innerHTML = 'Simpan';
+        },
+
+        menampilkanDaftarKategori: function(form) {
+                this.daftarKategori = dbKategori.get();
+                const componentDaftarKategori = document.getElementById('daftar-kategori');
+                componentDaftarKategori.innerHTML = '';
+                if (this.daftarKategori === null) {
+                    console.log ('tidak memiliki data');
+                } else {
+                        this.daftarKategori.forEach((kategori, index) => {
+                        componentDaftarKategori.innerHTML +=  `<h2><div class="flex justify-center gap-5"> <div class="card-actions justify-end">${kategori.nama} <button
+                        class="btn btn-accent btn-active" onclick="daftarKategori.editKategori(${index})">Edit</button><button 
+                        class="btn btn-accent btn-active" onclick="daftarKategori.hapusKategori(${index})"> Hapus </button></div></div></h2>`;
+                        });
+                }
+                
+        },
+        hapusKategori: function (index) {
+            if(confirm('Apakah anda yakin ingin menghapus kategori ini?')) {
+                this.daftarKategori.splice(index, 1);
+                dbKategori.save(this.daftarKategori);
+                this.menampilkanDaftarKategori();
+            }
+        },
+        editKategori: function (index) {
+            const kategori = this.daftarKategori[index];
+            const form = document.getElementById('form-kategori');
+            form.nama.value = kategori.nama;
+            form.index.value = index;
+
+            document.getElementById('btn-save-kategori').innerHTML = 'Edit';
+        }
+        }
+
+        function copy(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        daftarKategori.menampilkanDaftarKategori();
+
+        </script>
+</body>
+</html>
