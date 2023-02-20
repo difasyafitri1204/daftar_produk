@@ -4,91 +4,116 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@1.25.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
     <title>Transaksi Penjual</title>
 </head>
-<body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav">
-                <li ><a href="aplikasi_daftar_produk.html">Daftar Produk</a></li>
-                <li><a href="daftar-kategori.html">Kategori Produk</a></li>
-                <li class="active"><a href="transaksi.html">Transaksi</a></li>
-                <li><a href="konsumen.html">Konsumen</a></li>
-              </ul>
+<body >
+    <div class="container-fluid">
+        <div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+            <div class="flex-none px-2 mx-2"></div> 
+        <div class="flex-1 px-2 mx-2">
+        <div class="items-stretch hidden lg:flex">
+            <a class="btn btn-ghost btn-sm rounded-btn" href="aplikasi_daftar_produk.html">
+                  Daftar Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="daftar-kategori.html">
+                  Kategori Produk
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="transaksi.html">
+                  Transaksi
+                </a> 
+            <a class="btn btn-ghost btn-sm rounded-btn" href="konsumen.html">
+                  Konsumen
+                </a>
+        </div>
+        </div> 
+        </div>
+        <div class="container">
+            <div class="flex justify-center gap-5">
+                <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <form id="form-transaksi" action="" onsubmit="event.preventDefault(); simpanTransaksi(this)">
+                                <input name="index" type="hidden" value="-1">
+                    
+                            <div>
+                                <label for="produk">Nama Produk</label>
+                            </div>
+                            <div>
+                                <input type="text" id="produk" name="produk" class="input input-primary input-bordered">
+                            </div>
+                            <div>
+                                <label for="harga">Harga Produk</label>
+                            </div>
+                            <div>
+                                <input type="text" id="harga" name="harga" class="input input-primary input-bordered">
+                            </div>
+                            <div>
+                                <label for="stok">Stok Produk</label>
+                            </div>
+                            <div>
+                                <input type="text" id="stok" name="stok" class="input input-primary input-bordered">
+                            </div>
+                            <div>
+                                <label for="gambar">Link Gambar Produk</label>
+                            </div>  
+                            <div>
+                                <input type="text" id="gambar" name="gambar" class="input input-primary input-bordered">
+                            </div>
+                            <div>
+                                <label for="jumlah">Jumlah</label>
+                            </div>  
+                            <div>
+                                <input type="text" id="jumlah" name="jumlah" class="input input-primary input-bordered">
+                            </div>
+                            <div>
+                                <label for="total">Total Harga</label>
+                            </div>  
+                            <div>
+                                <input type="text" id="total" name="total" class="input input-primary input-bordered">
+                            </div>
+                            <div>
+                                <label for="tunai">Tunai</label>
+                            </div>  
+                            <div>
+                                <input type="text" id="tunai" name="tunai" class="input input-primary input-bordered">
+                            </div>
+                            <div>
+                                <label for="kembalian">Kembalian</label>
+                            </div>  
+                            <div>
+                                <input type="text" id="kembalian" name="kembalian" class="input input-primary input-bordered">
+                            </div>
+                            <div style="padding-top: 10px;">
+                                <button id="btn-save-transaksi" class="btn btn-accent btn-active">Simpan</button>
+                            </div>
+                            <h1 id="histori"></h1>
+                        </form>
+                    </div>
+                </div>
+                    <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <h1>Histori Penjualan</h1>
+                            <div id="daftar-transaksi"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </nav>
-<div class="container">
-    <h1>Transaksi Penjual</h1>
-    
-    <form id="form-transaksi" action="" onsubmit="event.preventDefault(); simpanTransaksi(this)">
-            <input name="index" type="hidden" value="-1">
-
-        <div>
-            <label for="produk">Nama Produk</label>
-        </div>
-        <div>
-            <input type="text" id="produk" name="produk">
-        </div>
-        <div>
-            <label for="harga">Harga Produk</label>
-        </div>
-        <div>
-            <input type="text" id="harga" name="harga">
-        </div>
-        <div>
-            <label for="stok">Stok Produk</label>
-        </div>
-        <div>
-            <input type="text" id="stok" name="stok">
-        </div>
-        <div>
-            <label for="gambar">Link Gambar Produk</label>
-        </div>  
-        <div>
-            <input type="text" id="gambar" name="gambar">
-        </div>
-        <div>
-            <label for="jumlah">Jumlah</label>
-        </div>  
-        <div>
-            <input type="text" id="jumlah" name="jumlah">
-        </div>
-        <div>
-            <label for="total">Total Harga</label>
-        </div>  
-        <div>
-            <input type="text" id="total" name="total">
-        </div>
-        <div>
-            <label for="tunai">Tunai</label>
-        </div>  
-        <div>
-            <input type="text" id="tunai" name="tunai">
-        </div>
-        <div>
-            <label for="kembalian">Kembalian</label>
-        </div>  
-        <div>
-            <input type="text" id="kembalian" name="kembalian">
-        </div>
-        <div style="padding-top: 10px;">
-            <button id="btn-save-transaksi" style="background-color: blanchedalmond;">Simpan</button>
-        </div>
-        <h1 id="histori"></h1>
-    </form>
-
-    <div id="daftar-transaksi"></div>
-</div>
+    </div>
 
     <script type="text/javascript">
         function simpanTransaksi(form) {
         console.log(form);
-        document.getElementById('histori').innerHTML = 'Histori Penjual';
         daftartransaksi.inputTransaksi(form);
         daftartransaksi.menampilkanDaftarTransaksi();
+    }
+    const dbTransaksi = {
+        save(daftarTransaksi2) {
+            localStorage.setItem('daftarTransaksi', JSON.stringify(daftarTransaksi2));
+        },
+        get () {
+            return JSON.parse(localStorage.getItem('daftarTransaksi'));
+        }
     }
     const daftartransaksi = {
         transaksi: {
@@ -148,10 +173,12 @@
             }
             
             if(this.transaksi.index == -1) {
+                this.daftarTransaksi = this.daftarTransaksi || [];
                 this.daftarTransaksi.push(copy(this.transaksi));
             } else {
                 this.daftarTransaksi[this.transaksi.index] = copy(this.transaksi)
             }
+            dbTransaksi.save(this.daftarTransaksi);
             this.resetFormTransaksi(form);
         },
         
@@ -179,11 +206,16 @@
             document.getElementById('btn-save-transaksi').innerHTML = 'Simpan';
         },
         menampilkanDaftarTransaksi: function () {
+            this.daftarTransaksi = dbTransaksi.get();
             const componentDaftarTransaksi = document.getElementById('daftar-transaksi');
             componentDaftarTransaksi.innerHTML = '';
-            this.daftarTransaksi.forEach((transaksi, index) => {
-                componentDaftarTransaksi.innerHTML +=  `<h4>${transaksi.produk} <br> ${transaksi.harga} <br> stok: ${transaksi.stok} <br> Jumlah: ${transaksi.jumlah}  <br> Total Harga: ${transaksi.total} <br> <img src="${transaksi.gambar}" width= "100px"></h4>`;
-            });
+            if (this.daftarTransaksi === null) {
+                console.log ('gak ada data');
+            } else {
+                this.daftarTransaksi.forEach((transaksi, index) => {
+                componentDaftarTransaksi.innerHTML +=  `<h4><div class="flex justify-center gap-5"> <div class="card-actions justify-end"> ${transaksi.produk} <br> ${transaksi.harga} <br> stok: ${transaksi.stok} <br> Jumlah: ${transaksi.jumlah}  <br> Total Harga: ${transaksi.total} <br> <img src="${transaksi.gambar}" width= "100px"></div></div></h4>`;
+                });
+            } 
         },
        
     }
@@ -191,6 +223,9 @@
     function copy(obj) {
         return JSON.parse(JSON.stringify(obj));
     }
+
+    daftartransaksi.menampilkanDaftarTransaksi();
+
 </script>
 </body>
 </html>
