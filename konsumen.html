@@ -29,65 +29,68 @@
                 </a>
         </div>
         </div> 
-        <div class="flex-none">
-                <button class="btn btn-square btn-ghost">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">              
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>            
-                    </svg>
-                </button>
-        </div> 
-        <div class="flex-none">
-                <button class="btn btn-square btn-ghost">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">             
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>             
-                    </svg>
-                </button>
-        </div>
         </div>
         <div class="container">
-        <form id="form-konsumen" action="" onsubmit="event.preventDefault(); simpanKonsumen(this)">
-            <input name="index" type="hidden" value="-1">
+            <div class="flex justify-center gap-5">
+                <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <form id="form-konsumen" action="" onsubmit="event.preventDefault(); simpanKonsumen(this)">
+                                    <input name="index" type="hidden" value="-1">
 
-        <div>
-            <label for="nama">Nama</label>
+                                <div>
+                                    <label for="nama">Nama</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="nama" name="nama" class="input input-primary input-bordered">
+                                </div>
+                                <div>
+                                    <label for="alamat">alamat</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="alamat" name="alamat" class="input input-primary input-bordered">
+                                </div>
+                                <div>
+                                    <label for="no">no.Hp</label>
+                                </div>
+                                <div>
+                                    <input type="text" id="no" name="no" class="input input-primary input-bordered">
+                                </div>
+                                <div>
+                                    <label for="email">Email</label>
+                                </div>  
+                                <div>
+                                    <input type="text" id="email" name="email" class="input input-primary input-bordered">
+                                </div>
+                                <div style="padding-top: 10px;">
+                                    <button id="btn-save-konsumen" class="btn btn-accent btn-active">Simpan</button>
+                                </div>                              
+                        </form>
+                    </div>
+                </div>
+                    <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <div id="daftar-konsumen"></div>
+                        </div>
+                    </div>
+            </div>
         </div>
-        <div>
-            <input type="text" id="nama" name="nama" class="input input-primary input-bordered">
-        </div>
-        <div>
-            <label for="alamat">alamat</label>
-        </div>
-        <div>
-            <input type="text" id="alamat" name="alamat" class="input input-primary input-bordered">
-        </div>
-        <div>
-            <label for="no">no.Hp</label>
-        </div>
-        <div>
-            <input type="text" id="no" name="no" class="input input-primary input-bordered">
-        </div>
-        <div>
-            <label for="email">Email</label>
-        </div>  
-        <div>
-            <input type="text" id="email" name="email" class="input input-primary input-bordered">
-        </div>
-        <div style="padding-top: 10px;">
-            <button id="btn-save-konsumen" class="btn btn-accent btn-active">Simpan</button>
-        </div>
-        
-    </form>
+    </div>
 
-    <div id="daftar-konsumen"></div>
-  </div>
-
-    <script >
-    function simpanKonsumen(form) {
-    console.log(form);
-    daftarKonsumen.inputKonsumen(form);
-    daftarKonsumen.menampilkanDaftarKonsumen();
-}
-const daftarKonsumen = {
+    <script type="text/javascript" >
+        function simpanKonsumen(form) {
+        console.log(form);
+        daftarKonsumen.inputKonsumen(form);
+        daftarKonsumen.menampilkanDaftarKonsumen();
+    }
+    const dbKonsumen = {
+        save(dfKonsumen2) {
+            localStorage.setItem('dfKonsumen', JSON.stringify(dfKonsumen2));
+        },
+        get () {
+            return JSON.parse(localStorage.getItem('dfKonsumen'));
+        }
+    }
+    const daftarKonsumen = {
     konsumen: {
         index: -1,
        nama: null,
@@ -121,10 +124,12 @@ const daftarKonsumen = {
         }
         
         if(this.konsumen.index == -1) {
+            this.dfKonsumen = this.dfKonsumen || [];
             this.dfKonsumen.push(copy(this.konsumen));
         } else {
             this.dfKonsumen[this.konsumen.index] = copy(this.konsumen)
         }
+        dbKonsumen.save(this.dfKonsumen);
         this.resetFormKonsumen(form);
     },
     
@@ -144,17 +149,23 @@ const daftarKonsumen = {
         document.getElementById('btn-save-konsumen').innerHTML = 'Simpan';
     },
     menampilkanDaftarKonsumen: function () {
-        const componentDaftarKonsumen = document.getElementById('daftar-konsumen');
-        componentDaftarKonsumen.innerHTML = '';
-        this.dfKonsumen.forEach((konsumen, index) => {
-            componentDaftarKonsumen.innerHTML +=  `<h4>${konsumen.nama} <br> ${konsumen.alamat} <br> stok: ${konsumen.no} <br>${konsumen.email} <button 
-            class="btn btn-accent btn-active" onclick="daftarKonsumen.editKonsumen(${index})">Edit</button><button 
-            class="btn btn-accent btn-active" onclick="daftarKonsumen.hapusKonsumen(${index})"> Hapus </button></h4>`;
-        });
+            this.dfKonsumen = dbKonsumen.get();
+            const componentDaftarKonsumen = document.getElementById('daftar-konsumen');
+            componentDaftarKonsumen.innerHTML = '';
+            if (this.dfKonsumen === null) {
+                console.log ('data nothing');
+            } else {
+                    this.dfKonsumen.forEach((konsumen, index) => {
+                    componentDaftarKonsumen.innerHTML +=  `<h4><div class="flex justify-center gap-5"> <div class="card-actions justify-end">${konsumen.nama} <br> ${konsumen.alamat} <br> stok: ${konsumen.no} <br>${konsumen.email} <button 
+                    class="btn btn-accent btn-active" onclick="daftarKonsumen.editKonsumen(${index})">Edit</button><button 
+                    class="btn btn-accent btn-active" onclick="daftarKonsumen.hapusKonsumen(${index})"> Hapus </button></div></div></h4>`;
+                    });
+            }   
     },
     hapusKonsumen: function (index) {
         if(confirm('Apakah anda yakin ingin menghaapus data ini?')) {
             this.dfKonsumen.splice(index, 1);
+            dbKonsumen.save(this.dfKonsumen);
             this.menampilkanDaftarKonsumen();
         }
     },
@@ -169,12 +180,15 @@ const daftarKonsumen = {
             form.email.value = konsumen.email;
 
         document.getElementById('btn-save-konsumen').innerHTML = 'Edit';
-    }
-}
+        }
+        }
 
-function copy(obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
-    </script>
+        function copy(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        }
+
+        daftarKonsumen.menampilkanDaftarKonsumen();
+
+    </script>   
 </body>
 </html>

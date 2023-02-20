@@ -12,59 +12,68 @@
     <div class="container-fluid">
         <div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
             <div class="flex-none px-2 mx-2"></div> 
-        <div class="flex-1 px-2 mx-2">
-        <div class="items-stretch hidden lg:flex">
-            <a class="btn btn-ghost btn-sm rounded-btn" href="aplikasi_daftar_produk.html">
-                  Daftar Produk
-                </a> 
-            <a class="btn btn-ghost btn-sm rounded-btn" href="daftar-kategori.html">
-                  Kategori Produk
-                </a> 
-            <a class="btn btn-ghost btn-sm rounded-btn" href="transaksi.html">
-                  Transaksi
-                </a> 
-            <a class="btn btn-ghost btn-sm rounded-btn" href="konsumen.html">
-                  Konsumen
-                </a>
-        </div>
+                <div class="flex-1 px-2 mx-2">
+                    <div class="items-stretch hidden lg:flex">
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="aplikasi_daftar_produk.html">
+                                Daftar Produk
+                            </a> 
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="daftar-kategori.html">
+                                Kategori Produk
+                            </a> 
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="transaksi.html">
+                                Transaksi
+                            </a> 
+                            <a class="btn btn-ghost btn-sm rounded-btn" href="konsumen.html">
+                                Konsumen
+                            </a>
+                    </div>      
+                </div>
+            </div>    
         </div> 
-        <div class="flex-none">
-                <button class="btn btn-square btn-ghost">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">              
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>            
-                    </svg>
-                </button>
-        </div> 
-        <div class="flex-none">
-                <button class="btn btn-square btn-ghost">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">             
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>             
-                    </svg>
-                </button>
-        </div>
-        </div>
+    </div>
         <div class="container">
-            <form id="form-kategori" action="" onsubmit="event.preventDefault(); simpanKategori(this)" >
-                <input name="index" type="hidden" value="-1">
-                <div  style="padding-bottom: 10px;">
-                    <label for="nama">
-                        <span class="label-text">Nama Kategori</span>
-                    </label>
+            <div class="flex justify-center gap-5">
+                <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                    <div class="card-body">
+                        <form id="form-kategori" action="" onsubmit="event.preventDefault(); simpanKategori(this)" >
+                            <input name="index" type="hidden" value="-1">
+                            <div  style="padding-bottom: 10px;">
+                                <label for="nama">
+                                    <span class="label-text">Nama Kategori</span>
+                                </label>
+                            </div>
+                            <div>
+                                <input type="text" id="nama" name="nama" class="input input-primary input-bordered">
+                            </div>
+                            <div style="padding-top: 10px;">
+                                <button id="btn-save-kategori" class="btn btn-accent btn-active">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div>
-                    <input type="text" id="nama" name="nama" class="input input-primary input-bordered">
-                </div>
-                <div style="padding-top: 10px;">
-                    <button id="btn-save-kategori" class="btn btn-accent btn-active">Simpan</button>
-                </div>
-            </form>
-        <div id="daftar-kategori"></div>
+                    <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                        <div class="card-body">
+                            <div id="daftar-kategori"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+            
+       
     
     <script type="text/javascript">
         function simpanKategori(form) {
         console.log(form);
         daftarKategori.inputKategori(form);
         daftarKategori.menampilkanDaftarKategori();
+        }
+        const dbKategori = {
+            save(daftarKategori2) {
+                localStorage.setItem('daftarKategori', JSON.stringify(daftarKategori2));
+            },
+            get() {
+                return JSON.parse(localStorage.getItem('daftarKategori'));
+            }
         }
         const daftarKategori = {
         kategori: {
@@ -82,10 +91,12 @@
             }
 
             if(this.kategori.index == -1) {
+                this.daftarKategori = this.daftarKategori || [];
                 this.daftarKategori.push(copy(this.kategori));
             } else {
                 this.daftarKategori[this.kategori.index] = copy(this.kategori)
             }
+            dbKategori.save(this.daftarKategori);
             this.resetFormKategori(form);
         },
             resetFormKategori: function(form) {
@@ -99,17 +110,24 @@
         },
 
         menampilkanDaftarKategori: function(form) {
+                this.daftarKategori = dbKategori.get();
                 const componentDaftarKategori = document.getElementById('daftar-kategori');
                 componentDaftarKategori.innerHTML = '';
-                this.daftarKategori.forEach((kategori, index) => {
-                    componentDaftarKategori.innerHTML +=  `<h4>${kategori.nama} <button
-                    class="btn btn-accent btn-active" onclick="daftarKategori.editKategori(${index})">Edit</button><button 
-                    class="btn btn-accent btn-active" onclick="daftarKategori.hapusKategori(${index})"> Hapus </button></h4>`;
-                });
+                if (this.daftarKategori === null) {
+                    console.log ('tidak memiliki data');
+                } else {
+                        this.daftarKategori.forEach((kategori, index) => {
+                        componentDaftarKategori.innerHTML +=  `<h2><div class="flex justify-center gap-5"> <div class="card-actions justify-end">${kategori.nama} <button
+                        class="btn btn-accent btn-active" onclick="daftarKategori.editKategori(${index})">Edit</button><button 
+                        class="btn btn-accent btn-active" onclick="daftarKategori.hapusKategori(${index})"> Hapus </button></div></div></h2>`;
+                        });
+                }
+                
         },
         hapusKategori: function (index) {
             if(confirm('Apakah anda yakin ingin menghapus kategori ini?')) {
                 this.daftarKategori.splice(index, 1);
+                dbKategori.save(this.daftarKategori);
                 this.menampilkanDaftarKategori();
             }
         },
@@ -126,6 +144,9 @@
         function copy(obj) {
             return JSON.parse(JSON.stringify(obj));
         }
+
+        daftarKategori.menampilkanDaftarKategori();
+
         </script>
 </body>
 </html>

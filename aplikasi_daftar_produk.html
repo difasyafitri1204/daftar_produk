@@ -29,65 +29,59 @@
             </a>
     </div>
     </div> 
-    <div class="flex-none">
-            <button class="btn btn-square btn-ghost">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">              
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>            
-                </svg>
-            </button>
-    </div> 
-    <div class="flex-none">
-            <button class="btn btn-square btn-ghost">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">             
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>             
-                </svg>
-            </button>
-    </div>
     </div>
     <div class="container">
-        <form id="form-produk" action="" onsubmit="event.preventDefault(); simpanProduk(this)">
-            <input name="index" type="hidden" value="-1">
-
-            <div>
-                <label for="produk">
-                    <span class="label-text">Nama Produk</span>
-                </label>
+        <div class="flex justify-center gap-5">
+            <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <form id="form-produk" action="" onsubmit="event.preventDefault(); simpanProduk(this)">
+                        <input name="index" type="hidden" value="-1">
+            
+                        <div>
+                            <label for="produk">
+                                <span class="label-text">Nama Produk</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="text" id="produk" name="produk" class="input input-primary input-bordered">
+                        </div>
+                        <div>
+                            <label for="harga">
+                                <span class="label-text">Harga Produk</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="text" id="harga" name="harga" class="input input-primary input-bordered">
+                        </div>
+                        <div>
+                            <label for="stok">
+                                <span class="label-text">Stok Produk</span>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="text" id="stok" name="stok" class="input input-primary input-bordered">
+                        </div>
+                        <div>
+                            <label for="gambar">
+                                <span class="label-text">Link Gambar Produk</span>
+                            </label>
+                        </div>  
+                        <div>
+                            <input type="text" id="gambar" name="gambar" class="input input-primary input-bordered">
+                        </div>
+                        <div style="padding-top: 10px;">
+                            <button id="btn-save-produk" class="btn btn-accent btn-active" >Simpan</button>
+                        </div>                   
+                    </form>
+                </div>
             </div>
-            <div>
-                <input type="text" id="produk" name="produk" class="input input-primary input-bordered">
+            <div class="card card-compact w-96 bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <div id="daftar-produk"></div>
+                </div>
             </div>
-            <div>
-                <label for="harga">
-                    <span class="label-text">Harga Produk</span>
-                </label>
-            </div>
-            <div>
-                <input type="text" id="harga" name="harga" class="input input-primary input-bordered">
-            </div>
-            <div>
-                <label for="stok">
-                    <span class="label-text">Stok Produk</span>
-                </label>
-            </div>
-            <div>
-                <input type="text" id="stok" name="stok" class="input input-primary input-bordered">
-            </div>
-            <div>
-                <label for="gambar">
-                    <span class="label-text">Link Gambar Produk</span>
-                </label>
-            </div>  
-            <div>
-            <input type="text" id="gambar" name="gambar" class="input input-primary input-bordered">
-    </div>
-    <div style="padding-top: 10px;">
-            <button id="btn-save-produk" class="btn btn-accent btn-active" >Simpan</button>
-        </div>
-        
-        </form>
-
-         <div id="daftar-produk"></div>
-    </div>
+        </div>           
+    </div>   
     <script src="aplikasi-daftar-produk.js"></script>
 </body>
 </html>
